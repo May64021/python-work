@@ -29,7 +29,7 @@ def createNewWindow():
             for task in tasks:
                 listbox_tasks.insert(tkinter.END, task)
         except:
-            tkinter.messagebox.showwarning(title="Warning!", message="Cannot find tasks.dat.")
+            tkinter.messagebox.showwarning(title="Warning!", message="Cannot find Todo")
             
     def saveTask():
         tasks = listbox_task.get(0, listbox_task.size())
@@ -113,7 +113,7 @@ def createNewWindow2():
             for task in tasks:
                 listbox_tasks.insert(tkinter.END, task)
         except:
-            tkinter.messagebox.showwarning(title="Warning!", message="Cannot find tasks.dat.")
+            tkinter.messagebox.showwarning(title="Warning!", message="Cannot find Todo2")
             
     def saveTask():
         tasks = listbox_task.get(0, listbox_task.size())
