@@ -1,86 +1,181 @@
+import tkinter as tk
 from  tkinter import * 
 import tkinter.messagebox
 import pickle
 
-def entertask():
-    input_text=""
-    def add():
-        input_text=entry_task.get(1.0, "end-1c")
-        if input_text=="":
-            tkinter.messagebox.showwarning(title="Warning!",message="Please Enter some Text")
-        else:
-            listbox_task.insert(END,input_text)
-            root1.destroy()
+def createNewWindow():
+    def entertask():
+        input_text=""
+        def add():
+            input_text=entry_task.get(1.0, "end-1c")
+            if input_text=="":
+                tkinter.messagebox.showwarning(title="Warning!",message="Please Enter some Text")
+            else:
+                listbox_task.insert(END,input_text)
+                root1.destroy()
+                
+        root1=Tk()
+        root1.title("Add task")
+        entry_task=Text(root1,width=40,height=4)
+        entry_task.pack()
+        button_temp=Button(root1,text="Add task",command=add)
+        button_temp.pack()
+        root1.mainloop()
+
+    def loadTask():
+        try:
+            tasks = pickle.load(open("Todo", "wb"))
+            listbox_tasks.delete(0, tkinter.END)
+            for task in tasks:
+                listbox_tasks.insert(tkinter.END, task)
+        except:
+            tkinter.messagebox.showwarning(title="Warning!", message="Cannot find tasks.dat.")
             
-    root1=Tk()
-    root1.title("Add task")
-    entry_task=Text(root1,width=40,height=4)
-    entry_task.pack()
-    button_temp=Button(root1,text="Add task",command=add)
-    button_temp.pack()
-    root1.mainloop()
+    def saveTask():
+        tasks = listbox_task.get(0, listbox_task.size())
+        pickle.dump(tasks, open("Todo","wb"))
 
-def loadTask():
-    try:
-        tasks = pickle.load(open("tasks.dat", "wb"))
-        listbox_tasks.delete(0, tkinter.END)
-        for task in tasks:
-            listbox_tasks.insert(tkinter.END, task)
-    except:
-        tkinter.messagebox.showwarning(title="Warning!", message="Cannot find tasks.dat.")
-        
-def saveTask():
-    tasks = listbox_task.get(0, listbox_task.size())
-    pickle.dump(tasks, open("tasks.dat","wb"))
+    def deletetask():
+        selected=listbox_task.curselection()
+        listbox_task.delete(selected[0])
 
-def deletetask():
-    selected=listbox_task.curselection()
-    listbox_task.delete(selected[0])
-
-def deleteAll():
-    listbox_task.delete(0, END)
- 
-def markcompleted():
-    marked=listbox_task.curselection()
-    temp=marked[0]
-    temp_marked=listbox_task.get(marked)
-    temp_marked=temp_marked+" ✔"
-    listbox_task.delete(temp)
-    listbox_task.insert(temp,temp_marked)
-
-window=Tk()
-window.title("TO DO LIST")
-
-frame_task=Frame(window)
-frame_task.pack()
-
-listbox_task=Listbox(frame_task,bg="black",fg="white",height=15,width=50,font = "Helvetica")  
-listbox_task.pack(side=tkinter.LEFT)
-
-scrollbar_task=Scrollbar(frame_task)
-scrollbar_task.pack(side=tkinter.RIGHT,fill=tkinter.Y)
-listbox_task.config(yscrollcommand=scrollbar_task.set)
-scrollbar_task.config(command=listbox_task.yview)
-
-entry_button=Button(window,text="Add task",width=50,command=entertask)
-entry_button.pack()
-
-save_button = Button(window, text="Save", width=50, command=saveTask)
-save_button.pack()
-
-load_button=Button(window, text="Load", width=50, command=loadTask)
-load_button.pack()
-
-delete_button=Button(window,text="Delete selected task",width=50,command=deletetask)
-delete_button.pack()
-
-deleteAll_button=Button(window,text="Delete All",width=50, command=deleteAll)
-deleteAll_button.pack()
-
-mark_button=Button(window,text="Mark as completed ",width=50,command=markcompleted)
-mark_button.pack()
+    def deleteAll():
+        listbox_task.delete(0, END)
+     
+    def markcompleted():
+        marked=listbox_task.curselection()
+        temp=marked[0]
+        temp_marked=listbox_task.get(marked)
+        temp_marked=temp_marked+" ✔"
+        listbox_task.delete(temp)
+        listbox_task.insert(temp,temp_marked)
 
 
-window.mainloop()
+    window=Tk()
+    window.title("TO DO LIST(WORK)")
 
+    frame_task=Frame(window)
+    frame_task.pack()
+
+    listbox_task=Listbox(frame_task,bg="black",fg="white",height=15,width=50,font = "Helvetica")  
+    listbox_task.pack(side=tkinter.LEFT)
+
+    scrollbar_task=Scrollbar(frame_task)
+    scrollbar_task.pack(side=tkinter.RIGHT,fill=tkinter.Y)
+    listbox_task.config(yscrollcommand=scrollbar_task.set)
+    scrollbar_task.config(command=listbox_task.yview)
+
+    entry_button=Button(window,text="Add task",width=50,command=entertask)
+    entry_button.pack()
+
+    save_button = Button(window, text="Save", width=50, command=saveTask)
+    save_button.pack()
+
+    load_button=Button(window, text="Load", width=50, command=loadTask)
+    load_button.pack()
+
+    delete_button=Button(window,text="Delete selected task",width=50,command=deletetask)
+    delete_button.pack()
+
+    deleteAll_button=Button(window,text="Delete All",width=50, command=deleteAll)
+    deleteAll_button.pack()
+
+    mark_button=Button(window,text="Mark as completed ",width=50,command=markcompleted)
+    mark_button.pack()
+
+
+
+    window.mainloop()
+
+def createNewWindow2():
+    def entertask():
+        input_text=""
+        def add():
+            input_text=entry_task.get(1.0, "end-1c")
+            if input_text=="":
+                tkinter.messagebox.showwarning(title="Warning!",message="Please Enter some Text")
+            else:
+                listbox_task.insert(END,input_text)
+                root1.destroy()
+                
+        root1=Tk()
+        root1.title("Add task")
+        entry_task=Text(root1,width=40,height=4)
+        entry_task.pack()
+        button_temp=Button(root1,text="Add task",command=add)
+        button_temp.pack()
+        root1.mainloop()
+
+    def loadTask():
+        try:
+            tasks = pickle.load(open("Todo2", "wb"))
+            listbox_tasks.delete(0, tkinter.END)
+            for task in tasks:
+                listbox_tasks.insert(tkinter.END, task)
+        except:
+            tkinter.messagebox.showwarning(title="Warning!", message="Cannot find tasks.dat.")
+            
+    def saveTask():
+        tasks = listbox_task.get(0, listbox_task.size())
+        pickle.dump(tasks, open("Todo2","wb"))
+
+    def deletetask():
+        selected=listbox_task.curselection()
+        listbox_task.delete(selected[0])
+
+    def deleteAll():
+        listbox_task.delete(0, END)
+     
+    def markcompleted():
+        marked=listbox_task.curselection()
+        temp=marked[0]
+        temp_marked=listbox_task.get(marked)
+        temp_marked=temp_marked+" ✔"
+        listbox_task.delete(temp)
+        listbox_task.insert(temp,temp_marked)
+
+
+    window=Tk()
+    window.title("TO DO LIST(PERSONAL)")
+
+    frame_task=Frame(window)
+    frame_task.pack()
+
+    listbox_task=Listbox(frame_task,bg="black",fg="white",height=15,width=50,font = "Helvetica")  
+    listbox_task.pack(side=tkinter.LEFT)
+
+    scrollbar_task=Scrollbar(frame_task)
+    scrollbar_task.pack(side=tkinter.RIGHT,fill=tkinter.Y)
+    listbox_task.config(yscrollcommand=scrollbar_task.set)
+    scrollbar_task.config(command=listbox_task.yview)
+
+    entry_button=Button(window,text="Add task",width=50,command=entertask)
+    entry_button.pack()
+
+    save_button = Button(window, text="Save", width=50, command=saveTask)
+    save_button.pack()
+
+    load_button=Button(window, text="Load", width=50, command=loadTask)
+    load_button.pack()
+
+    delete_button=Button(window,text="Delete selected task",width=50,command=deletetask)
+    delete_button.pack()
+
+    deleteAll_button=Button(window,text="Delete All",width=50, command=deleteAll)
+    deleteAll_button.pack()
+
+    mark_button=Button(window,text="Mark as completed ",width=50,command=markcompleted)
+    mark_button.pack()
+
+    window.mainloop()
+
+app = tk.Tk()
+app.title("TO DO LIST")
+button1 = tk.Button(app, text="TO DO LIST(WORK)", command=createNewWindow)
+button1.pack()
+
+button2 = tk.Button(app, text = "TO DO LIST(PERSONAL)", command=createNewWindow2)
+button2.pack()
+
+app.mainloop()
 
